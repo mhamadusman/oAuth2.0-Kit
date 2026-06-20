@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { creatUserDTO } from "../types/type.auth";
 import { Exception } from "../helpers/exception";
+import { StatusCode } from '../constants/statusCode';
+import { STATUS_CODES } from "../constants/statusCode";
 
 export class authController {
   static async login(req: Request, res: Response, next: NextFunction) {}
@@ -12,7 +14,6 @@ export class authController {
   ) {
     try{
       const userDetails = req.body
-      
     }catch(error: unknown){
       next(error)
     }
