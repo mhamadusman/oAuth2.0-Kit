@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { creatUserDTO } from "../types/type.auth";
-import { Exception } from "../helpers/exception";
-import { StatusCode } from '../constants/statusCode';
-import { STATUS_CODES } from "../constants/statusCode";
+import { STATUS_CODES } from '../constants/statusCode';
+import { SUCCESS_MESSAGES } from "../constants/successMessages";
 
 export class authController {
   static async login(req: Request, res: Response, next: NextFunction) {}
@@ -13,7 +12,10 @@ export class authController {
     next: NextFunction,
   ) {
     try{
-      const userDetails = req.body
+      
+      return res.status(STATUS_CODES.OK).json({
+        message: "ok"
+      })
     }catch(error: unknown){
       next(error)
     }

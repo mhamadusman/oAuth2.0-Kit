@@ -7,11 +7,6 @@ import {
 
 export const createUserSchema = z
   .object({
-    [userFields.NAME]: z
-      .string({ message: userFieldsErrorMessages.NAME })
-      .trim()
-      .min(1, userFieldsErrorMessages.NAME),
-
     [userFields.EMAIL]: z
       .string({ message: userFieldsErrorMessages.EMAIL })
       .email({ message: userFieldsErrorMessages.EMAIL }),
