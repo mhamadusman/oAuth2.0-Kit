@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { authController } from "../controllers/authController";
+import { validateRequestData } from "../middlewares/requestValidation";
+import { createUserSchema } from "../zodSchemas/zod.createUserScheema";
 
 export const router = Router()
-router.post("/sign-up" , authController.signUp)
+router.get("/sign-up",  authController.signUp)
 router.post("/login" , authController.login) 
 router.post("/log-out" , authController.logOut)
 router.post("/refresh-token" , authController.refreshToken) 
