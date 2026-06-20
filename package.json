@@ -28,7 +28,8 @@
     "helmet": "^8.2.0",
     "morgan": "^1.11.0",
     "pg": "^8.21.0",
-    "sequelize": "^6.37.8"
+    "sequelize": "^6.37.8",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

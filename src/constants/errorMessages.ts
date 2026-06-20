@@ -18,5 +18,7 @@ export const ERROR_MESSAGES = {
   },
   SERVER: {
     INTERNAL_SERVER_ERROR: "Something went wrong on our end. Please try again later.",
+    PAGE_NOT_FOUND: "Page not found.",
+
   }
 } as const;
