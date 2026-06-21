@@ -21,7 +21,6 @@ export class authUtil {
   static matchPasswords = async (userInput: string,  dbPassword: string) => {
     const match = await bcrypt.compare(userInput, dbPassword);
     if (!match) {
-      console.log("password not matched...")
       throw new Exception(
         ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS,
         STATUS_CODES.UNAUTHORIZED,
