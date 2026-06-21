@@ -1,13 +1,23 @@
-import { ERROR_MESSAGES } from "../constants/errorMessages"
-import { STATUS_CODES } from "../constants/statusCode"
-import { userHandler } from "../handlers/user.handler"
-import { Exception } from "../helpers/exception"
-import User from "../models/user.model"
-export class userUtil{
-    static async verifyEmailRecod(email: string){
-        const user: User | null = await userHandler.verifyEmailRecod(email)
-        if(user){
-           throw new Exception(ERROR_MESSAGES.AUTH.EMAIL_ALREADY_EXISTS , STATUS_CODES.CONFLICT)
-        }
+import { ERROR_MESSAGES } from "../constants/errorMessages";
+import { STATUS_CODES } from "../constants/statusCode";
+import { userHandler } from "../handlers/user.handler";
+import { Exception } from "../helpers/exception";
+import User from "../models/user.model";
+export class userUtil {
+  static async getUserByEmail(email: string): Promise<User | null> {
+    const user: User | null = await userHandler.getUserByEmail(email);
+    if (!user) {
+      throw new Exception(
+        ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS,
+        STATUS_CODES.UNAUTHORIZED,
+      );
     }
+    return user;
+  }
+  static updateRefreshToken = async (
+    refreshToken: string,
+    email: string,
+  ): Promise<void> => {
+    await userHandler.updateRefreshToken(refreshToken, email);
+  };
 }
