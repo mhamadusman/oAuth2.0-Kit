@@ -2,11 +2,12 @@ import User from "../models/user.model";
 import { creatUserDTO } from "../types/type.auth";
 
 export class userHandler {
-  static async creatUser(data: creatUserDTO) {
-    await User.create({
+  static async creatUser(data: creatUserDTO): Promise<User> {
+    const newUser = await User.create({
       email: data.email,
       password: data.password,
     });
+    return newUser
   }
   static async getUserByEmail(email: string): Promise<User | null> {
     const user = User.findOne({

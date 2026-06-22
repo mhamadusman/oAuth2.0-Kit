@@ -7,10 +7,10 @@ import { loginResponse } from "../types/type.auth";
 import { userUtil } from "../utils/user.util";
 
 export class authManager {
-  static async createUser(userData: creatUserDTO) {
+  static async createUser(userData: creatUserDTO): Promise<User> {
     await authUtil.verifyEmailRecod(userData.email);
     userData.password = await authUtil.getHashedPassword(userData.password)
-    await userHandler.creatUser(userData);
+    return await userHandler.creatUser(userData);
   }
   static async login(userData: loginUserDTO): Promise<loginResponse> {
     const user: User | null = await userUtil.getUserByEmail(userData.email);
