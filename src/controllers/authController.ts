@@ -5,6 +5,8 @@ import { SUCCESS_MESSAGES } from "../constants/successMessages";
 import { authManager } from "./authManager";
 import { verificationManager } from "./verificationController/verificationManager";
 import { emailService } from "../services/service.email";
+import { Exception } from "../helpers/exception";
+import { ERROR_MESSAGES } from "../constants/errorMessages";
 
 export class authController {
   static async login(
@@ -42,9 +44,15 @@ export class authController {
   ) {
     try {
       const newUser = await authManager.createUser(req.body);
-      const emailVerificationToken = await verificationManager.createVerificationData(newUser.id);
-      const verificationURL = verificationManager.getVerificationUrl(emailVerificationToken)
-      await emailService.sendEmailVerificationLink(verificationURL , newUser.email)
+      const emailVerificationToken =
+        await verificationManager.createVerificationData(newUser.id);
+      const verificationURL = verificationManager.getVerificationUrl(
+        emailVerificationToken,
+      );
+      await emailService.sendEmailVerificationLink(
+        verificationURL,
+        newUser.email,
+      );
       return res.status(STATUS_CODES.CREATED).json({
         message: SUCCESS_MESSAGES.AUTH.USER_CREATED,
       });

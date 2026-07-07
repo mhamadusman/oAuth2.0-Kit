@@ -4,6 +4,7 @@ import { STATUS_CODES } from "../constants/statusCode";
 import { Exception } from "../helpers/exception";
 import { ERROR_MESSAGES } from "../constants/errorMessages";
 import bcrypt from "bcrypt";
+import Verification from "../models/verification.model";
 export class authUtil {
   static async verifyEmailRecod(email: string) {
     const user: User | null = await userHandler.getUserByEmail(email);
@@ -18,7 +19,7 @@ export class authUtil {
     const hashedPassword: string = await bcrypt.hash(userPassword, 10);
     return hashedPassword;
   };
-  static matchPasswords = async (userInput: string,  dbPassword: string) => {
+  static matchPasswords = async (userInput: string, dbPassword: string) => {
     const match = await bcrypt.compare(userInput, dbPassword);
     if (!match) {
       throw new Exception(
@@ -28,5 +29,4 @@ export class authUtil {
     }
   };
 
- 
 }

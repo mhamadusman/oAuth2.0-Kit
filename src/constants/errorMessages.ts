@@ -9,6 +9,8 @@ export const ERROR_MESSAGES = {
     REFRESH_KEY_NOT_PRESENT: "Access secret key is not pressent",
     INVALID_TOKEN: "Session verification failed. Invalid token.",
     REFRESH_TOKEN_REQUIRED: "Refresh token is missing or invalid.",
+    INVALID_EMAIL_VERIFICATION_TOKEN: "Email verification link expired. Requst to resend new link",
+    PROVIDE_VALID_EMAIL_VERIFICATION_TOKEN: "Provide valid email verification token"
 
   },
   VALIDATION: {

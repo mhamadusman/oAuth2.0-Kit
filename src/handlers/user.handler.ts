@@ -7,7 +7,7 @@ export class userHandler {
       email: data.email,
       password: data.password,
     });
-    return newUser
+    return newUser;
   }
   static async getUserByEmail(email: string): Promise<User | null> {
     const user = User.findOne({
@@ -22,6 +22,16 @@ export class userHandler {
     await User.update(
       { refreshToken: refreshToken },
       { where: { email: email } },
+    );
+  }
+  static async updateAccountStatus(userId: number) {
+    await User.update(
+      { isEmailVerified: true },
+      {
+        where: {
+          id: userId,
+        },
+      },
     );
   }
 }

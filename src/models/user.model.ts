@@ -9,9 +9,15 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   declare profileImage: CreationOptional<string | null>
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+  declare isEmailVerified: CreationOptional<boolean>
 }
 User.init(
   {
+    isEmailVerified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
