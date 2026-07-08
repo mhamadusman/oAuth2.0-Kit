@@ -2,8 +2,8 @@ import transporter from "../config/config.nodemailer";
 export class emailService {
   static async sendEmail(message: {}): Promise<void> {
     try {
-      const info = await transporter.sendMail(message);
-      console.log("email sent successfully :: ", info.messageId);
+      const info =  transporter.sendMail(message);
+      //console.log("email sent successfully :: ", info.messageId);
     } catch (error) {
       console.log("error in seding email verification link", error);
     }
@@ -23,6 +23,6 @@ export class emailService {
         </div>r
       `,
     };
-    await this.sendEmail(message);
+     this.sendEmail(message);
   }
 }

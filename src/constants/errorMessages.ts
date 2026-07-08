@@ -10,7 +10,14 @@ export const ERROR_MESSAGES = {
     INVALID_TOKEN: "Session verification failed. Invalid token.",
     REFRESH_TOKEN_REQUIRED: "Refresh token is missing or invalid.",
     INVALID_EMAIL_VERIFICATION_TOKEN: "Email verification link expired. Requst to resend new link",
-    PROVIDE_VALID_EMAIL_VERIFICATION_TOKEN: "Provide valid email verification token"
+    PROVIDE_VALID_EMAIL_VERIFICATION_TOKEN: "Provide valid email verification token",
+    RESET_PASSWORD_KEY_IS_NOT_PRESENT: "Reset password key is not present",
+    RESET_PASSWORD_TOKEN_REQUIRED: "Reset password token required",
+    RESET_PASSWORD_TOKEN_EXPIRED: "Reset password token expired",
+    INVALID_RESET_PASSWORD_LINK: "Please request a new reset password link!"
+
+
+
 
   },
   VALIDATION: {

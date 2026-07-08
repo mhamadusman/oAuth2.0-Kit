@@ -8,6 +8,9 @@ export const SUCCESS_MESSAGES = {
       "Password reset link has been sent to your email.",
     PASSWORD_RESET_SUCCESSFUL: "Your password has been updated successfully.",
     TOKEN_REFRESHED: "Session tokens refreshed successfully.",
+    VERIFICATION_LINK_SENT:
+      "Email verification link sent. please check your inbox/spam folder!",
+      ENTER_NEW_PASSWORD: "Please enter new password!"
   },
   USER: {
     PROFILE_FETCHED: "User profile data retrieved successfully.",
