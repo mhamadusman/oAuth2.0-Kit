@@ -2,7 +2,8 @@ import { verificationHandler } from "../../handlers/verification.handler";
 import { verificationUtil } from "../../utils/verification.util";
 import { verification } from "../../types/type.verification";
 import Verification from "../../models/verification.model";
-
+import { userUtil } from "../../utils/user.util";
+import User from "../../models/user.model";
 export class verificationManager {
   static async createVerificationData(id: number): Promise<string> {
     const data: verification = verificationUtil.createVerificatonRecord(id);
@@ -24,5 +25,8 @@ export class verificationManager {
     verifiedRecord: Verification,
   ): Promise<void> {
     await verificationHandler.removeEmailVerificationToken(verifiedRecord);
+  }
+  static async verifyEmail(email: string): Promise<User>{
+    return await userUtil.getUserByEmail(email)
   }
 }

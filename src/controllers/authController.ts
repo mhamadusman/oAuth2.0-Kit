@@ -5,8 +5,7 @@ import { SUCCESS_MESSAGES } from "../constants/successMessages";
 import { authManager } from "./authManager";
 import { verificationManager } from "./verificationController/verificationManager";
 import { emailService } from "../services/service.email";
-import { Exception } from "../helpers/exception";
-import { ERROR_MESSAGES } from "../constants/errorMessages";
+
 
 export class authController {
   static async login(
@@ -62,4 +61,18 @@ export class authController {
   }
   static async logOut(req: Request, res: Response, next: NextFunction) {}
   static async refreshToken(req: Request, res: Response, next: NextFunction) {}
+  static async resetPassword(
+    req: Request<{}, { messaage: string }, { password: string }>,
+    res: Response<{ message: string }>,
+    next: NextFunction,
+  ) {
+    try {
+     await authManager.resetPassword(Number(req.resetUserId) , req.body.password);
+      return res.status(STATUS_CODES.OK).json({
+        message: SUCCESS_MESSAGES.AUTH.PASSWORD_RESET_SUCCESSFUL,
+      });
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
 }

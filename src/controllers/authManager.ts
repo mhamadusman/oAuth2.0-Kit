@@ -23,5 +23,9 @@ export class authManager {
       refresh_token: refreshToken,
     };
   }
+  static async resetPassword(id: number ,newPassword: string): Promise<void>{
+    const hashedPassword = await authUtil.getHashedPassword(newPassword)
+    await userHandler.updatePassword(id , hashedPassword)
+  }
   
 }

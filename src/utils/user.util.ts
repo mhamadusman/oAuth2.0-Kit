@@ -4,7 +4,7 @@ import { userHandler } from "../handlers/user.handler";
 import { Exception } from "../helpers/exception";
 import User from "../models/user.model";
 export class userUtil {
-  static async getUserByEmail(email: string): Promise<User | null> {
+  static async getUserByEmail(email: string): Promise<User> {
     const user: User | null = await userHandler.getUserByEmail(email);
     if (!user) {
       throw new Exception(

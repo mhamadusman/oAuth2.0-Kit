@@ -24,6 +24,11 @@ export class userHandler {
       { where: { email: email } },
     );
   }
+  static async updatePassword(id: number , newPassword: string): Promise<void>{
+    await User.update(
+      {password: newPassword},{where: {id:id}}
+    )
+  }
   static async updateAccountStatus(userId: number) {
     await User.update(
       { isEmailVerified: true },

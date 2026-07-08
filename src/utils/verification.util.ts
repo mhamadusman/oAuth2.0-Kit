@@ -8,7 +8,7 @@ import Verification from "../models/verification.model";
 export class verificationUtil {
   static async verificationUtil(token: string) {}
   static generateEmailVerificationLink(token: string): string {
-    return `http://localhost:5000/api/v1/auth/verify-email?token=${token}`;
+    return `http://localhost:5000/api/v1/auth/verify-password-reset-url?token=${token}`;
   }
   static getEmailVerificationToken(): string {
     return crypto.randomBytes(32).toString("hex");
