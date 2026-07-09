@@ -6,7 +6,6 @@ import { authManager } from "./authManager";
 import { verificationManager } from "./verificationController/verificationManager";
 import { emailService } from "../services/service.email";
 
-
 export class authController {
   static async login(
     req: Request<{}, loginResponse, loginUserDTO>,
@@ -67,12 +66,46 @@ export class authController {
     next: NextFunction,
   ) {
     try {
-     await authManager.resetPassword(Number(req.resetUserId) , req.body.password);
+      await authManager.resetPassword(
+        Number(req.resetUserId),
+        req.body.password,
+      );
       return res.status(STATUS_CODES.OK).json({
         message: SUCCESS_MESSAGES.AUTH.PASSWORD_RESET_SUCCESSFUL,
       });
     } catch (error: unknown) {
       next(error);
     }
+  }
+  static async signupWithGoogle(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const userData = req.user as any;
+      const result = await authManager.continueWithSocialProfile(userData);
+      res.cookie("auth_token", result.auth_token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 15 * 60 * 1000,
+      });
+
+      res.cookie("refresh_token", result.refresh_token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+      res.redirect("http://localhost:5000/api/v1/auth/welcome");
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+  static welcome(req: Request, res: Response, next: NextFunction) {
+    return res.status(STATUS_CODES.OK).json({
+      message: "welcome",
+    });
   }
 }
