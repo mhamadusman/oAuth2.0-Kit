@@ -4,7 +4,7 @@ import sequelize from "../config/config.database.js";
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
   declare email: string;
-  declare password: string;
+  declare password: CreationOptional<string | null>;
   declare refreshToken: CreationOptional<string | null>;
   declare profileImage: CreationOptional<string | null>
   declare createdAt: CreationOptional<Date>;
@@ -33,7 +33,7 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     profileImage:{
         type: DataTypes.STRING,
