@@ -20,4 +20,10 @@ export class userUtil {
   ): Promise<void> => {
     await userHandler.updateRefreshToken(refreshToken, email);
   };
+  static isEmailVerified(emailStatus: boolean){
+    if(!emailStatus){
+      throw new Exception(ERROR_MESSAGES.AUTH.EMAIL_NOT_VERIFIED , STATUS_CODES.FORBIDDEN)
+    }
+  }
 }
+

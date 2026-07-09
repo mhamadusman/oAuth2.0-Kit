@@ -19,8 +19,7 @@ export class emailService {
           <p>Please click the link below to verify your account:</p>
           <p><a href="${link}" style="background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
           <p>If the button doesn't work, copy and paste this link into your browser:</p>
-          <p>${link}</p>
-        </div>r
+        </div>
       `,
     };
      this.sendEmail(message);

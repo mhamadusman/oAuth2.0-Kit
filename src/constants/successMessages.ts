@@ -10,7 +10,7 @@ export const SUCCESS_MESSAGES = {
     TOKEN_REFRESHED: "Session tokens refreshed successfully.",
     VERIFICATION_LINK_SENT:
       "Email verification link sent. please check your inbox/spam folder!",
-      ENTER_NEW_PASSWORD: "Please enter new password!"
+    ENTER_NEW_PASSWORD: "Please enter new password!",
   },
   USER: {
     PROFILE_FETCHED: "User profile data retrieved successfully.",

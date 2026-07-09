@@ -14,7 +14,8 @@ export const ERROR_MESSAGES = {
     RESET_PASSWORD_KEY_IS_NOT_PRESENT: "Reset password key is not present",
     RESET_PASSWORD_TOKEN_REQUIRED: "Reset password token required",
     RESET_PASSWORD_TOKEN_EXPIRED: "Reset password token expired",
-    INVALID_RESET_PASSWORD_LINK: "Please request a new reset password link!"
+    INVALID_RESET_PASSWORD_LINK: "Please request a new reset password link!",
+    EMAIL_NOT_VERIFIED: "Please verify your email to get into app!"
 
 
 

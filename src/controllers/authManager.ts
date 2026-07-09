@@ -14,6 +14,7 @@ export class authManager {
   }
   static async login(userData: loginUserDTO): Promise<loginResponse> {
     const user: User | null = await userUtil.getUserByEmail(userData.email);
+    userUtil.isEmailVerified(user?.isEmailVerified)
     await authUtil.matchPasswords(userData.password, user?.password as string);
     const accessToken = token.getAccessToken(user?.id);
     const refreshToken = token.getRefreshToken(user?.id);
