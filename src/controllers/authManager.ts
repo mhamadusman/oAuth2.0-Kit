@@ -5,6 +5,7 @@ import { creatUserDTO, loginUserDTO } from "../types/type.auth";
 import { authUtil } from "../utils/auth.util";
 import { loginResponse } from "../types/type.auth";
 import { userUtil } from "../utils/user.util";
+import { AccountUtil } from "../utils/account.util";
 import { AccountHandler } from "../handlers/account.handler";
 
 export class authManager {
@@ -26,9 +27,21 @@ export class authManager {
       refresh_token: refreshToken,
     };
   }
-  static async resetPassword(id: number ,newPassword: string): Promise<void>{
-    const hashedPassword = await authUtil.getHashedPassword(newPassword)
-    await userHandler.updatePassword(id , hashedPassword)
+  static async continueWithSocialProfile(socialProfile: any) {
+    const result =
+      await AccountHandler.loginOrregisterUsingSocialProfile(socialProfile);
+    const accessToken = token.getAccessToken(result.user.id);
+    const refreshToken = token.getRefreshToken(result.user.id);
+    await userHandler.updateRefreshToken(refreshToken, result.user.email);
+    const finalData = {
+      ...result,
+      auth_token: accessToken,
+      refresh_token: refreshToken
+    }
+    return finalData;
   }
-  
+  static async resetPassword(id: number, newPassword: string): Promise<void> {
+    const hashedPassword = await authUtil.getHashedPassword(newPassword);
+    await userHandler.updatePassword(id, hashedPassword);
+  }
 }

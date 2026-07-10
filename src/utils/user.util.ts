@@ -14,6 +14,12 @@ export class userUtil {
     }
     return user;
   }
+  static async isUserExist(email: string): Promise<boolean>{
+    if(await userHandler.getUserByEmail(email)){
+      return true
+    }
+     return false
+  }
   static updateRefreshToken = async (
     refreshToken: string,
     email: string,
