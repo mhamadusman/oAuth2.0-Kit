@@ -28,7 +28,7 @@ export class userUtil {
       );
     }
   }
-  static isPasswordNull(password: string) {
+  static isPasswordNull(password: string | null) {
     if (!password) {
       throw new Exception(
         ERROR_MESSAGES.AUTH.LOGIN_WITH_SOCIAL_PROFILE,

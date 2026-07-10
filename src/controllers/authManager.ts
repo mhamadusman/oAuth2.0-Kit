@@ -17,7 +17,6 @@ export class authManager {
     const user: User = await userUtil.getUserByEmail(userData.email)
     userUtil.isPasswordNull(user.password)
     userUtil.isEmailVerified(user?.isEmailVerified)
-    await 
     await authUtil.matchPasswords(userData.password, user?.password as string);
     const accessToken = token.getAccessToken(user?.id);
     const refreshToken = token.getRefreshToken(user?.id);
