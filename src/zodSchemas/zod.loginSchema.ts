@@ -8,25 +8,13 @@ import {
 export const loginSchema = z
   .object({
     [userFields.EMAIL]: z
-      .string({ message: userFieldsErrorMessages.EMAIL })
-      .email({ message: userFieldsErrorMessages.EMAIL }),
+      .string({ message: userFieldsErrorMessages.WRONG_LOGIN_CREDENTIALS })
+      .trim(),
 
     [userFields.PASSWORD]: z
-      .string({ message: userFieldsErrorMessages.PASSWORD_MISSING })
-      .min(PASSWORD_RULES.MIN_LENGTH, userFieldsErrorMessages.PASSWORD_MIN)
-      .regex(
-        PASSWORD_RULES.UPPERCASE_REGEX,
-        userFieldsErrorMessages.PASSWORD_UPPERCASE,
-      )
-      .regex(
-        PASSWORD_RULES.LOWERCASE_REGEX,
-        userFieldsErrorMessages.PASSWORD_LOWERCASE,
-      )
-      .regex(PASSWORD_RULES.DIGIT_REGEX, userFieldsErrorMessages.PASSWORD_DIGIT)
-      .regex(
-        PASSWORD_RULES.SPECIAL_CHAR_REGEX,
-        userFieldsErrorMessages.PASSWORD_SPECIAL,
-      )
+      .string({ message: userFieldsErrorMessages.WRONG_LOGIN_CREDENTIALS })
+      .min(PASSWORD_RULES.MIN_LENGTH, userFieldsErrorMessages.WRONG_LOGIN_CREDENTIALS)
+      
   })
 
 

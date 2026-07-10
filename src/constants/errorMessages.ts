@@ -15,7 +15,8 @@ export const ERROR_MESSAGES = {
     RESET_PASSWORD_TOKEN_REQUIRED: "Reset password token required",
     RESET_PASSWORD_TOKEN_EXPIRED: "Reset password token expired",
     INVALID_RESET_PASSWORD_LINK: "Please request a new reset password link!",
-    EMAIL_NOT_VERIFIED: "Please verify your email to get into app!"
+    EMAIL_NOT_VERIFIED: "Please verify your email to get into app!",
+    LOGIN_WITH_SOCIAL_PROFILE: "please login with google or gitHub!"
 
 
 

@@ -22,6 +22,7 @@ export const userFieldsErrorMessages = {
   PASSWORD_LOWERCASE: "Password must contain at least one lowercase letter.",
   PASSWORD_DIGIT: "Password must contain at least one digit.",
   PASSWORD_SPECIAL: "Password must contain at least one special character.",
-  PASSWORD_MISMATCH: "Passwords do not match."
+  PASSWORD_MISMATCH: "Passwords do not match.",
+  WRONG_LOGIN_CREDENTIALS: "Invalid email or password"
 } as const;
 

@@ -5,6 +5,7 @@ import { creatUserDTO, loginUserDTO } from "../types/type.auth";
 import { authUtil } from "../utils/auth.util";
 import { loginResponse } from "../types/type.auth";
 import { userUtil } from "../utils/user.util";
+import { AccountHandler } from "../handlers/account.handler";
 
 export class authManager {
   static async createUser(userData: creatUserDTO): Promise<User> {
@@ -13,8 +14,10 @@ export class authManager {
     return await userHandler.creatUser(userData);
   }
   static async login(userData: loginUserDTO): Promise<loginResponse> {
-    const user: User | null = await userUtil.getUserByEmail(userData.email);
+    const user: User = await userUtil.getUserByEmail(userData.email)
+    userUtil.isPasswordNull(user.password)
     userUtil.isEmailVerified(user?.isEmailVerified)
+    await 
     await authUtil.matchPasswords(userData.password, user?.password as string);
     const accessToken = token.getAccessToken(user?.id);
     const refreshToken = token.getRefreshToken(user?.id);
