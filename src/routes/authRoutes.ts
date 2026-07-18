@@ -25,10 +25,10 @@ router.post(
   validateIncomingParams(emailVerificationTokenSchema),
   verificationController.verifyEmailtoken,
 );
-router.post(
+router.post(  
   "/forget-password",
   validateRequestData(emailSchema),
-  verificationController.forgetPassword,
+  verificationController.forgetPassword
 );
 router.post(
   "/verify-password-reset-url",

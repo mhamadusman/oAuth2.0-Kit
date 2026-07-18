@@ -24,6 +24,8 @@ app.use(cors({
 
 const apiPrefixV1 = "/api/v1";
 app.use(`${apiPrefixV1}/auth`, authRoutes);
+// Put this near the top of app.ts to catch and mute favicon requests
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 //page not found
 app.use((req: Request, res: Response, next: NextFunction) => {
   throw new Exception(
