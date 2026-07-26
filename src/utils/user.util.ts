@@ -22,9 +22,9 @@ export class userUtil {
   }
   static updateRefreshToken = async (
     refreshToken: string,
-    email: string,
+    id: number,
   ): Promise<void> => {
-    await userHandler.updateRefreshToken(refreshToken, email);
+    await userHandler.updateRefreshToken(refreshToken, id);
   };
   static isEmailVerified(emailStatus: boolean) {
     if (!emailStatus) {

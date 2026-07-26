@@ -21,7 +21,7 @@ router.post(
 router.post("/login", validateRequestData(loginSchema), authController.login);
 router.post("/log-out", authController.logOut);
 router.post("/refresh-token", authController.refreshToken);
-router.post(
+router.get(
   "/verify-email",
   validateIncomingParams(emailVerificationTokenSchema),
   verificationController.verifyEmailtoken,

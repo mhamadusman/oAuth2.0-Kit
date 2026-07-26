@@ -18,9 +18,7 @@ export class verificationController {
           req.query.token as string,
         );
       await userHandler.updateAccountStatus(userId);
-      return res.status(STATUS_CODES.OK).json({
-        message: "email verified",
-      });
+      return res.redirect(`${process.env.FRONT_END_URL}/login`);
     } catch (error: unknown) {
       next(error);
     }

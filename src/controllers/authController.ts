@@ -13,29 +13,17 @@ import {
 
 export class authController {
   static async login(
-    req: Request<{}, loginResponse, loginUserDTO>,
-    res: Response<loginResponse>,
+    req: Request<{}, loginUserDTO>,
+    res: Response,
     next: NextFunction,
   ) {
     try {
       const data = await authManager.login(req.body);
-      res.cookie("auth_token", data.access_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 15 * 60 * 1000,
-      });
-
-      res.cookie("refresh_token", data.refresh_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
+      res.cookie("auth_token", data.access_token, ACCESS_TOKEN_COOKIE_OPTIONS)
+      res.cookie("refresh_token", data.refresh_token, REFRESH_TOKEN_COOKIE_OPTIONS)
       return res.status(STATUS_CODES.OK).json({
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-      });
+        message: "welcome"
+      })
     } catch (error: unknown) {
       next(error);
     }

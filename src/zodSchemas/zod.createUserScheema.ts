@@ -10,7 +10,9 @@ export const createUserSchema = z
     [userFields.EMAIL]: z
       .string({ message: userFieldsErrorMessages.EMAIL })
       .email({ message: userFieldsErrorMessages.EMAIL }),
-
+    [userFields.NAME]: z
+    .string({message: userFieldsErrorMessages.NAME})
+    .trim(),
     [userFields.PASSWORD]: z
       .string({ message: userFieldsErrorMessages.PASSWORD_MISSING })
       .min(PASSWORD_RULES.MIN_LENGTH, userFieldsErrorMessages.PASSWORD_MIN)

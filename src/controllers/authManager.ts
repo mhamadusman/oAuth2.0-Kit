@@ -28,7 +28,7 @@ export class authManager {
     await authUtil.matchPasswords(userData.password, user?.password as string);
     const accessToken = token.getAccessToken(user?.id);
     const refreshToken = token.getRefreshToken(user?.id);
-    await userUtil.updateRefreshToken(refreshToken, userData.email);
+    await userUtil.updateRefreshToken(refreshToken, user?.id);
     return {
       access_token: accessToken,
       refresh_token: refreshToken,

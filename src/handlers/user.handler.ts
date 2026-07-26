@@ -7,6 +7,7 @@ export class userHandler {
     const newUser = await User.create({
       email: data.email,
       password: data.password,
+      name: data.name
     });
     return newUser;
   }
@@ -18,11 +19,11 @@ export class userHandler {
   }
   static async updateRefreshToken(
     refreshToken: string,
-    userId: number,
+    id: number,
   ): Promise<void> {
     await User.update(
       { refreshToken: refreshToken },
-      { where: { id: userId } },
+      { where: { id: id } },
     );
   }
   static async updatePassword(id: number, newPassword: string): Promise<void> {
