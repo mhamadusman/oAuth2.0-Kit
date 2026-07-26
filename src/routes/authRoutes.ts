@@ -9,8 +9,9 @@ import { emailSchema } from "../zodSchemas/zod.email.schema";
 import { verificationController } from "../controllers/verificationController/verificationController";
 import { Authentication } from "../helpers/helpers.authentication";
 import { passwordSchema } from "../zodSchemas/zod.password.schema";
-import passport from "../config/config.passport";
-
+import googlepassport from "../config/config.passport";
+import githubpassport from "../config/config.gitHub.passport";
+import { token } from "../helpers/token";
 export const router = Router();
 router.post(
   "/sign-up",
@@ -25,10 +26,10 @@ router.post(
   validateIncomingParams(emailVerificationTokenSchema),
   verificationController.verifyEmailtoken,
 );
-router.post(  
+router.post(
   "/forget-password",
   validateRequestData(emailSchema),
-  verificationController.forgetPassword
+  verificationController.forgetPassword,
 );
 router.post(
   "/verify-password-reset-url",
@@ -45,17 +46,30 @@ router.post(
 );
 router.get(
   "/google",
-  passport.authenticate("google", {
+  googlepassport.authenticate("google", {
     scope: ["profile", "email"],
     session: false,
   }),
 );
 router.get(
   "/google/callback",
-  passport.authenticate("google", {
+  googlepassport.authenticate("google", {
     failureRedirect: "/login",
     session: false,
   }),
   authController.signupWithGoogle,
 );
-router.get("/welcome", authController.welcome);
+router.get(
+  "/github",
+  githubpassport.authenticate("github", { scope: ["user:email"] }),
+);
+
+router.get(
+  "/github/callback",
+  githubpassport.authenticate("github", {
+    failureRedirect: "/login",
+    session: false,
+  }),
+  authController.signupWithGoogle,
+);
+router.get("/me", token.authenticate, authController.userProfile);

@@ -5,6 +5,11 @@ import { SUCCESS_MESSAGES } from "../constants/successMessages";
 import { authManager } from "./authManager";
 import { verificationManager } from "./verificationController/verificationManager";
 import { emailService } from "../services/service.email";
+import { 
+  ACCESS_TOKEN_COOKIE_OPTIONS, 
+  REFRESH_TOKEN_COOKIE_OPTIONS,
+  CLEAR_COOKIE_OPTIONS 
+} from '../config/cookie.config';
 
 export class authController {
   static async login(
@@ -85,27 +90,20 @@ export class authController {
     try {
       const userData = req.user as any;
       const result = await authManager.continueWithSocialProfile(userData);
-      res.cookie("auth_token", result.auth_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 15 * 60 * 1000,
-      });
+      res.cookie("auth_token", result.auth_token, ACCESS_TOKEN_COOKIE_OPTIONS)
+      res.cookie("refresh_token", result.refresh_token, REFRESH_TOKEN_COOKIE_OPTIONS)
 
-      res.cookie("refresh_token", result.refresh_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-      res.redirect("http://localhost:5000/api/v1/auth/welcome");
+      return res.redirect(`${process.env.FRONT_END_URL}/dashboard`);
     } catch (error: unknown) {
       next(error);
     }
   }
-  static welcome(req: Request, res: Response, next: NextFunction) {
-    return res.status(STATUS_CODES.OK).json({
-      message: "welcome",
-    });
+  static async userProfile(req: Request, res: Response, next: NextFunction) {
+    try {
+      const profile = await authManager.getUserProfile(Number(req.userId));
+      return res.status(STATUS_CODES.OK).json(profile);
+    } catch (error) {
+      next(error);
+    }
   }
 }

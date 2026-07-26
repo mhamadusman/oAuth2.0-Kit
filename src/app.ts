@@ -1,5 +1,7 @@
-import morgan from "morgan";
 import cors from "cors";
+import dotenv from 'dotenv';
+dotenv.config();
+import morgan from "morgan";
 import { Request, Response, NextFunction } from "express";
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -9,23 +11,25 @@ import { Exception } from "./helpers/exception";
 import helmet from "helmet";
 import { ERROR_MESSAGES } from "./constants/errorMessages";
 
+
 const app = express();
-app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONT_END_URL, 
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));
 
-
-app.use(cors({
-  origin: true,      
-  credentials: true  
-}));
-
 const apiPrefixV1 = "/api/v1";
 app.use(`${apiPrefixV1}/auth`, authRoutes);
-// Put this near the top of app.ts to catch and mute favicon requests
 app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 //page not found
 app.use((req: Request, res: Response, next: NextFunction) => {
   throw new Exception(
@@ -39,7 +43,7 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof Exception) {
     if (error.errors && error.errors.length > 0) {
       return res.status(error.statusCode).json({
-        messsage: error.message,
+        message: error.message,
         errors: error.errors,
       });
     } else {
