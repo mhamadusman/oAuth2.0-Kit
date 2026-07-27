@@ -1,6 +1,4 @@
 import cors from "cors";
-import dotenv from 'dotenv';
-dotenv.config();
 import morgan from "morgan";
 import { Request, Response, NextFunction } from "express";
 import express from "express";
