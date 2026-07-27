@@ -43,3 +43,13 @@ export interface SocialLoginResult {
   created: boolean;
   accountCreated: boolean;
 }
+
+export interface RefreshTokens{
+   auth_token: string,
+   refresh_token: string
+}
+export interface Iemail{
+  subject : string,
+  message: string,
+  link: string
+}

@@ -6,9 +6,10 @@ import { STATUS_CODES } from "../constants/statusCode";
 import { verificationHandler } from "../handlers/verification.handler";
 import Verification from "../models/verification.model";
 export class verificationUtil {
-  static async verificationUtil(token: string) {}
-  static generateEmailVerificationLink(token: string): string {
-    return `http://localhost:5000/api/v1/auth/verify-email?token=${token}`;
+  static  verificationUtil(token: string) {}
+  static generateEmailVerificationLink(token: string , endPoint: string): string {
+    console.log()
+    return `${process.env.BACKEND_URL}/api/v1/auth/${endPoint}?token=${token}`;
   }
   static getEmailVerificationToken(): string {
     return crypto.randomBytes(32).toString("hex");

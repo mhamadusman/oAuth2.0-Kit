@@ -11,6 +11,7 @@ export const SUCCESS_MESSAGES = {
     VERIFICATION_LINK_SENT:
       "Email verification link sent. please check your inbox/spam folder!",
     ENTER_NEW_PASSWORD: "Please enter new password!",
+   
   },
   USER: {
     PROFILE_FETCHED: "User profile data retrieved successfully.",

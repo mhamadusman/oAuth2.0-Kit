@@ -1,17 +1,15 @@
-import { CookieOptions } from 'express';
-
-const isProduction = process.env.NODE_ENV === 'production';
-
+import { CookieOptions } from "express";
+const isProduction = process.env.NODE_ENV === "production";
 export const BASE_COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: 'lax',
-  path: '/',
+  sameSite: "lax",
+  path: "/",
 };
 
 export const ACCESS_TOKEN_COOKIE_OPTIONS: CookieOptions = {
   ...BASE_COOKIE_OPTIONS,
-  maxAge: 15 * 60 * 1000, 
+  maxAge: 1 * 60 * 1000,
 };
 
 export const REFRESH_TOKEN_COOKIE_OPTIONS: CookieOptions = {

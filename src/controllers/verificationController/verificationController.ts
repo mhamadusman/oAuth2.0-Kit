@@ -5,6 +5,11 @@ import { STATUS_CODES } from "../../constants/statusCode";
 import { emailService } from "../../services/service.email";
 import { SUCCESS_MESSAGES } from "../../constants/successMessages";
 import { token } from "../../helpers/token";
+import { Iemail } from "../../types/type.auth";
+import {
+  ACCESS_TOKEN_COOKIE_OPTIONS,
+  REFRESH_TOKEN_COOKIE_OPTIONS,
+} from "../../config/cookie.config";
 
 export class verificationController {
   static async verifyEmailtoken(
@@ -18,7 +23,11 @@ export class verificationController {
           req.query.token as string,
         );
       await userHandler.updateAccountStatus(userId);
-      return res.redirect(`${process.env.FRONT_END_URL}/login`);
+      const accessToken = token.getAccessToken(userId);
+      const refreshToken = token.getRefreshToken(userId);
+      res.cookie("auth_token", accessToken, ACCESS_TOKEN_COOKIE_OPTIONS);
+      res.cookie("refresh_token", refreshToken, REFRESH_TOKEN_COOKIE_OPTIONS);
+      return res.redirect(`${process.env.FRONT_END_URL}/dashboard`);
     } catch (error: unknown) {
       next(error);
     }
@@ -34,9 +43,16 @@ export class verificationController {
       //creat verification link and send back to user
       const verificationToken =
         await verificationManager.createVerificationData(user.id);
-      const verificationURL =
-        verificationManager.getVerificationUrl(verificationToken);
-      emailService.sendEmailVerificationLink(verificationURL, user.email);
+      const verificationURL = verificationManager.getVerificationUrl(
+        verificationToken,
+        "verify-password-reset-url",
+      );
+      const emailDetails: Iemail = {
+        subject: "Verify your forget password link",
+        link: verificationURL,
+        message: "Click the button to verify link",
+      };
+      emailService.sendEmailVerificationLink(emailDetails, user.email);
       return res.status(STATUS_CODES.OK).json({
         message: SUCCESS_MESSAGES.AUTH.VERIFICATION_LINK_SENT,
       });
@@ -63,9 +79,7 @@ export class verificationController {
         sameSite: "lax",
         maxAge: 5 * 60 * 1000,
       });
-      return res.status(STATUS_CODES.OK).json({
-        message: SUCCESS_MESSAGES.AUTH.ENTER_NEW_PASSWORD,
-      });
+      res.redirect(`${process.env.FRONT_END_URL}/reset-password`);
     } catch (error: unknown) {
       next(error);
     }

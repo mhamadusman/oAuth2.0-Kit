@@ -11,8 +11,8 @@ export class verificationManager {
     //return only verification token
     return data.verificationToken;
   }
-  static getVerificationUrl(token: string): string {
-    return verificationUtil.generateEmailVerificationLink(token);
+  static getVerificationUrl(token: string , endPoint: string): string {
+    return verificationUtil.generateEmailVerificationLink(token, endPoint);
   }
   static async getEmailVerificationRecordAndRemove(token: string): Promise<number> {
     const verifiedRecord: Verification =

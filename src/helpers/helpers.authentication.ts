@@ -2,12 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import Jwt, { JwtPayload } from "jsonwebtoken";
 import { STATUS_CODES } from "../constants/statusCode";
 import { ERROR_MESSAGES } from "../constants/errorMessages";
-import User from "../models/user.model";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: User;
+      id: number;
       resetUserId?: number;
     }
   }
@@ -18,6 +17,7 @@ interface myJwtType extends JwtPayload {
 }
 
 export class Authentication {
+  // use both for access and refresh token
   static authenticate(tokenName: string, tokenKey: string) {
     return async (req: Request, res: Response, next: NextFunction) => {
       const authorization = req.headers.authorization;
@@ -35,7 +35,7 @@ export class Authentication {
 
       try {
         const decoded = Jwt.verify(token, tokenKey) as myJwtType;
-        req.user = { id: decoded.userId } as User;
+        req.id = decoded.id ;
         next();
       } catch (error: unknown) {
         return res.status(STATUS_CODES.UNAUTHORIZED).json({
@@ -69,4 +69,6 @@ export class Authentication {
       }
     };
   }
+
+  
 }

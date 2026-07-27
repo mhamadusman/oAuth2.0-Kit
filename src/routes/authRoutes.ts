@@ -11,7 +11,7 @@ import { Authentication } from "../helpers/helpers.authentication";
 import { passwordSchema } from "../zodSchemas/zod.password.schema";
 import googlepassport from "../config/config.passport";
 import githubpassport from "../config/config.gitHub.passport";
-import { token } from "../helpers/token";
+
 export const router = Router();
 router.post(
   "/sign-up",
@@ -19,8 +19,14 @@ router.post(
   authController.signUp,
 );
 router.post("/login", validateRequestData(loginSchema), authController.login);
-router.post("/log-out", authController.logOut);
-router.post("/refresh-token", authController.refreshToken);
+router.post(
+  "/log-out",
+  Authentication.authenticate(
+    "auth_token",
+    process.env.JWT_ACCESS_TOKEN_SECRET!,
+  ),
+  authController.logOut,
+);
 router.get(
   "/verify-email",
   validateIncomingParams(emailVerificationTokenSchema),
@@ -31,7 +37,7 @@ router.post(
   validateRequestData(emailSchema),
   verificationController.forgetPassword,
 );
-router.post(
+router.get(
   "/verify-password-reset-url",
   validateIncomingParams(emailVerificationTokenSchema),
   verificationController.verifyPasswordResetUrl,
@@ -72,4 +78,19 @@ router.get(
   }),
   authController.signupWithGoogle,
 );
-router.get("/me", token.authenticate, authController.userProfile);
+router.get(
+  "/me",
+  Authentication.authenticate(
+    "auth_token",
+    process.env.JWT_ACCESS_TOKEN_SECRET as string,
+  ),
+  authController.userProfile,
+);
+router.post(
+  "/refresh-token",
+  Authentication.authenticate(
+    "refresh_token",
+    process.env.JWT_REFRESH_TOKEN_SECRET!,
+  ),
+  authController.refreshToken,
+);

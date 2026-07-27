@@ -14,7 +14,7 @@ import { AccountHandler } from "../handlers/account.handler";
 import { Exception } from "../helpers/exception";
 import { ERROR_MESSAGES } from "../constants/errorMessages";
 import { STATUS_CODES, StatusCode } from "../constants/statusCode";
-
+import { RefreshTokens } from "../types/type.auth";
 export class authManager {
   static async createUser(userData: creatUserDTO): Promise<User> {
     await authUtil.verifyEmailRecod(userData.email);
@@ -61,5 +61,16 @@ export class authManager {
   static async resetPassword(id: number, newPassword: string): Promise<void> {
     const hashedPassword = await authUtil.getHashedPassword(newPassword);
     await userHandler.updatePassword(id, hashedPassword);
+  }
+  
+  static  refreshToken = async(id: number): Promise<RefreshTokens> =>  {
+    const access_token = token.getAccessToken(id)
+    const refresh_token = token.getRefreshToken(id)
+    await userHandler.updateRefreshToken(refresh_token , id)
+    return {
+        auth_token: access_token,
+        refresh_token: refresh_token
+    }
+
   }
 }
