@@ -3,7 +3,7 @@ const isProduction = process.env.NODE_ENV === "production";
 export const BASE_COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: "lax",
+  sameSite: "none",
   path: "/",
 };
 
