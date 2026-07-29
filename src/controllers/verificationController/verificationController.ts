@@ -6,9 +6,11 @@ import { emailService } from "../../services/service.email";
 import { SUCCESS_MESSAGES } from "../../constants/successMessages";
 import { token } from "../../helpers/token";
 import { Iemail } from "../../types/type.auth";
+
 import {
   ACCESS_TOKEN_COOKIE_OPTIONS,
   REFRESH_TOKEN_COOKIE_OPTIONS,
+  PASSWORD_RESET_COOKIE_OPTIONS
 } from "../../config/cookie.config";
 
 export class verificationController {
@@ -73,12 +75,7 @@ export class verificationController {
         );
       //create short jwt
       const passwordResetToken = token.getPasswordResetToken(userId);
-      res.cookie("reset-password-token", passwordResetToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 5 * 60 * 1000,
-      });
+      res.cookie("reset-password-token", passwordResetToken, PASSWORD_RESET_COOKIE_OPTIONS)
       res.redirect(`${process.env.FRONT_END_URL}/reset-password`);
     } catch (error: unknown) {
       next(error);

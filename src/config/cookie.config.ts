@@ -20,3 +20,8 @@ export const REFRESH_TOKEN_COOKIE_OPTIONS: CookieOptions = {
 export const CLEAR_COOKIE_OPTIONS: CookieOptions = {
   ...BASE_COOKIE_OPTIONS,
 };
+export const PASSWORD_RESET_COOKIE_OPTIONS: CookieOptions = {
+  ...BASE_COOKIE_OPTIONS,
+  maxAge: 1 * 60 * 1000,
+
+};
