@@ -5,7 +5,7 @@ import { STATUS_CODES } from "../constants/statusCode.js";
 import * as pg from "pg";
 
 const connectionSTR = process.env.DATABASE_URL;
-
+const inProduction = process.env.NODE_ENV === "production"
 if (!connectionSTR) {
   throw new Exception(
     ERROR_MESSAGES.DATABASE.DB_CONNECTION_STRING_NOT_PRESENT,
@@ -17,12 +17,14 @@ const sequelize = new Sequelize(connectionSTR, {
   dialect: "postgres",
   dialectModule: pg,
   logging: false,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false, 
-    },
-  },
+  dialectOptions: inProduction
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : {},
   pool: {
     max: 10,
     min: 0, 
