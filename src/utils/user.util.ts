@@ -9,7 +9,7 @@ export class userUtil {
     if (!user) {
       throw new Exception(
         ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS,
-        STATUS_CODES.UNAUTHORIZED,
+        STATUS_CODES.BAD_REQUEST,
       );
     }
     return user;
