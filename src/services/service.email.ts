@@ -1,29 +1,41 @@
-import transporter from "../config/config.nodemailer";
-import { Iemail } from "../types/type.auth";
+
+import { brevoClient } from "../config/config.brevo"
+import { Iemail } from "../types/type.auth"
+
 export class emailService {
-  static async sendEmail(message: {}): Promise<void> {
+  static async sendEmail(message: object): Promise<void> {
     try {
-      const info = await transporter.sendMail(message);
-      console.log("email sent successfully :: ", info);
+      const info = await brevoClient.transactionalEmails.sendTransacEmail(message)
+      console.log("email sent successfully :: ", info)
     } catch (error) {
-      console.log("error in seding email verification link", error);
+      console.log("error in sending email verification link", error)
+      throw error
     }
   }
+
   static async sendEmailVerificationLink(
     details: Iemail,
-    to: string,
+    to: string
   ): Promise<void> {
     const message = {
-      from: process.env.SENDER_EMAIL,
-      to: to,
+      sender: {
+        email: process.env.SENDER_EMAIL!,
+        name: "AppStore"
+      },
+      to: [{ email: to }],
       subject: details.subject,
-      html: `
+      htmlContent: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <p>${details.message}</p>
-          <p><a href="${details.link}" style="background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a></p>
+          <p>
+            <a href="${details.link}" style="background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+              Verify Email
+            </a>
+          </p>
         </div>
-      `,
-    };
-    this.sendEmail(message);
+      `
+    }
+
+    await this.sendEmail(message)
   }
 }
