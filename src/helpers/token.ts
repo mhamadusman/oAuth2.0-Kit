@@ -22,7 +22,7 @@ export class token {
     }
     const access_secret_key = process.env.JWT_ACCESS_TOKEN_SECRET;
     if (!access_secret_key) {
-      throw new Error(ERROR_MESSAGES.AUTH.ACCESS_SECRET_KEY);
+      throw new Error(ERROR_MESSAGES.AUTH.ACCESS_SECRET_KEY_IS_MISSING);
     }
     const accessToken = jwt.sign({ id: id }, access_secret_key, {
       expiresIn: "15m",
@@ -80,7 +80,7 @@ export class token {
 
       const access_secret_key = process.env.JWT_ACCESS_TOKEN_SECRET;
       if (!access_secret_key) {
-        throw new Error(ERROR_MESSAGES.AUTH.ACCESS_SECRET_KEY);
+        throw new Error(ERROR_MESSAGES.AUTH.ACCESS_SECRET_KEY_IS_MISSING);
       }
 
       const decoded = jwt.verify(token, access_secret_key) as JwtPayload;
