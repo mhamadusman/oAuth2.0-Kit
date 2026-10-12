@@ -4,6 +4,7 @@ import { Iemail } from "../types/type.auth"
 
 export class emailService {
   static async sendEmail(message: object): Promise<void> {
+    console.log("email details :: ", message)
     try {
       const info = await brevoClient.transactionalEmails.sendTransacEmail(message)
       console.log("email sent successfully :: ", info)
