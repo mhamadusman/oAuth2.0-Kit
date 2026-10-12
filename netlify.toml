@@ -3,7 +3,7 @@
   publish = "public"
 
 [functions]
-  external_node_modules = ["express"]
+  external_node_modules = ["express", "serverless-http", "pg-hstore"]
   node_bundler = "esbuild"
 
 [[redirects]]
