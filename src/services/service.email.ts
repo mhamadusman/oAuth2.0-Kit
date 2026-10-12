@@ -3,7 +3,7 @@ import { Iemail } from "../types/type.auth";
 export class emailService {
   static async sendEmail(message: {}): Promise<void> {
     try {
-      const info = transporter.sendMail(message);
+      const info = await transporter.sendMail(message);
       console.log("email sent successfully :: ", info);
     } catch (error) {
       console.log("error in seding email verification link", error);
