@@ -1,13 +1,14 @@
 
-import { brevoClient } from "../config/config.brevo"
+import { transporter } from "../config/config.nodemailer"
 import { Iemail } from "../types/type.auth"
 
 export class emailService {
   static async sendEmail(message: object): Promise<void> {
     console.log("email details :: ", message)
+
     try {
-      const info = await brevoClient.transactionalEmails.sendTransacEmail(message)
-      console.log("email sent successfully :: ", info)
+      const info = await transporter.sendMail(message)
+      console.log("email sent successfully :: ", info.messageId)
     } catch (error) {
       console.log("error in sending email verification link", error)
       throw error
@@ -19,13 +20,13 @@ export class emailService {
     to: string
   ): Promise<void> {
     const message = {
-      sender: {
-        email: process.env.SENDER_EMAIL!,
-        name: "AppStore"
+      from: {
+        name: "AppStore",
+        address: process.env.SENDER_EMAIL!
       },
-      to: [{ email: to }],
+      to,
       subject: details.subject,
-      htmlContent: `
+      html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <p>${details.message}</p>
           <p>
