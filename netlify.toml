@@ -1,13 +1,20 @@
 [build]
-  command = "npm install"
+  command = "npm run build"
   publish = "public"
 
 [functions]
-  external_node_modules = ["express", "serverless-http", "pg-hstore"]
+  directory = "netlify/functions"
   node_bundler = "esbuild"
+  external_node_modules = ["bcrypt", "pg", "pg-hstore"]
+
+[[redirects]]
+  from = "/api/v1"
+  to = "/.netlify/functions/api/api/v1"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/api/v1/*"
-  to = "/.netlify/functions/api/:splat"
+  to = "/.netlify/functions/api/api/v1/:splat"
   status = 200
   force = true

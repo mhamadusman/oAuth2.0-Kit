@@ -26,7 +26,7 @@ const sequelize = new Sequelize(connectionSTR, {
       }
     : {},
   pool: {
-    max: 10,
+    max: inProduction ? 2 : 10,
     min: 0, 
     acquire: 30000,
     idle: 10000,
