@@ -12,6 +12,7 @@ import { ERROR_MESSAGES } from "./constants/errorMessages";
 
 const app = express();
 app.use(cookieParser());
+console.log("frontend ::", process.env.FRONT_END_URL)
 const corsOptions = {
   origin: process.env.FRONT_END_URL, 
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
