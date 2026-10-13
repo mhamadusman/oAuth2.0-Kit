@@ -1,5 +1,6 @@
 [build]
   command = "npm install --include=dev && npm run build"
+  SECRETS_SCAN_OMIT_KEYS = ["NODE_ENV"]
   publish = "public"
 
 [functions]
