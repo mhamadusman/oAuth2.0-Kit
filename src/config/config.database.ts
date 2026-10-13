@@ -5,7 +5,7 @@ import { STATUS_CODES } from "../constants/statusCode.js";
 import * as pg from "pg";
 
 const connectionSTR = process.env.DATABASE_URL;
-const inProduction = process.env.NODE_ENV === "production"
+const inProduction = process.env.NODE_ENV !== "development"
 if (!connectionSTR) {
   throw new Exception(
     ERROR_MESSAGES.DATABASE.DB_CONNECTION_STRING_NOT_PRESENT,
